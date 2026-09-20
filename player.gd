@@ -1,51 +1,46 @@
 extends Area2D
-signal hit
 
-@export var speed = 400
+@export var speed := 400
 var screen_size
+@export var our_gravity := 200
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	screen_size = get_viewport_rect().size
+	body_entered.connect(_on_body_entered)
 
-
+func _on_body_entered(body: Node2D) -> void: 
+	if body is RigidBody2D: 
+		hide()
+		get_parent().game_over()
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
+func _process(delta):
 	var velocity = Vector2.ZERO
 	if Input.is_action_pressed("move_right"):
 		velocity.x += 1
-
 	if Input.is_action_pressed("move_left"):
 		velocity.x -= 1
-
-	if Input.is_action_pressed("move_up"):
-		velocity.y -= 1
-
-	if Input.is_action_pressed("move_down"):
-		velocity.y += 1
+	if Input.is_action_pressed("move_up") and $RayCast2D2.is_colliding():
+		velocity.y -= our_gravity * delta
+	elif not $RayCast2D.is_colliding():
+		velocity.y += our_gravity * delta
 
 	if velocity.length() > 0:
-		velocity = velocity.normalized()*speed
+		velocity = velocity.normalized() * speed
 		$AnimatedSprite2D.play()
 	else:
 		$AnimatedSprite2D.stop()
-	if velocity.x != 0:
-		$AnimatedSprite2D.animation = "walk"
-		$AnimatedSprite2D.flip_v = false
-		$AnimatedSprite2D.flip_h = velocity.x < 0
-	if velocity.y != 0:
-		$AnimatedSprite2D.animation = "up"
-		$AnimatedSprite2D.flip_v = velocity.y > 0
 	position += velocity * delta
 	position = position.clamp(Vector2.ZERO, screen_size)
+	if velocity.x != 0:
+		$AnimatedSprite2D.animation = "walk"
+		$AnimatedSprite2D.flip_v = false 
+		$AnimatedSprite2D.flip_h = velocity.x < 0
+	elif velocity.y != 0:
+		$AnimatedSprite2D.animation = "up"
+		$AnimatedSprite2D.flip_v = velocity.y > 0
+		
 
-
-func _on_body_entered(body: Node2D) -> void:
-	pass # Replace with function body.
-	hide()
-	hit.emit()
-	$CollisionShape2D.set_deferred("disabled",true)
-
-func start(pos):
-	position = pos
+func start():
 	show()
-	$CollisionShape2D.disabled = false
+	position = Vector2(100, 100)

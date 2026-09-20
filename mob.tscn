@@ -8,7 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://blm16464yk6wk" path="res://dodge_the_creeps_2d_assets/art/enemyWalking_1.png" id="5_cixyi"]
 [ext_resource type="Texture2D" uid="uid://dgk6wewi374xg" path="res://dodge_the_creeps_2d_assets/art/enemyWalking_2.png" id="6_7ulmv"]
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_pcqmr"]
+[sub_resource type="SpriteFrames" id="SpriteFrames_nokgg"]
 animations = [{
 "frames": [{
 "duration": 1.0,
@@ -19,7 +19,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"fly",
-"speed": 5.0
+"speed": 3.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -30,7 +30,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"swim",
-"speed": 5.0
+"speed": 3.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -44,25 +44,20 @@ animations = [{
 "speed": 3.0
 }]
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_jbnni"]
-radius = 36.0
-height = 102.0
+[sub_resource type="CircleShape2D" id="CircleShape2D_nokgg"]
+radius = 24.0
 
-[node name="mob" type="RigidBody2D" unique_id=1416208596]
-collision_mask = 0
+[node name="mob" type="RigidBody2D" unique_id=1416435552]
 gravity_scale = 0.0
 script = ExtResource("1_1qmh0")
-metadata/_edit_group_ = true
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=632172299]
-scale = Vector2(0.75, 0.75)
-sprite_frames = SubResource("SpriteFrames_pcqmr")
-animation = &"walk"
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1222178297]
+position = Vector2(8, 0)
+rotation = 3.1415927
+scale = Vector2(0.3695989, 0.3359824)
+sprite_frames = SubResource("SpriteFrames_nokgg")
+animation = &"swim"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=335033971]
-rotation = 1.5707964
-shape = SubResource("CapsuleShape2D_jbnni")
-
-[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=638508233]
-
-[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1394244172]
+position = Vector2(8, 0)
+shape = SubResource("CircleShape2D_nokgg")

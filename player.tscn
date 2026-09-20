@@ -36,6 +36,10 @@ radius = 28.0
 height = 72.0
 
 [node name="Player" type="Area2D" unique_id=1893546371]
+position = Vector2(245, 1)
+gravity_point = true
+gravity_point_unit_distance = 1.01
+gravity = 732.963
 script = ExtResource("1_sweqy")
 metadata/_edit_group_ = true
 
@@ -47,4 +51,10 @@ animation = &"up"
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1817811320]
 shape = SubResource("CapsuleShape2D_b26j0")
 
-[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[node name="RayCast2D" type="RayCast2D" parent="." unique_id=1090741603]
+target_position = Vector2(0, 43)
+collision_mask = 241
+collide_with_areas = true
+
+[node name="RayCast2D2" type="RayCast2D" parent="." unique_id=369679312]
+target_position = Vector2(0, 195)
